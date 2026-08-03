@@ -6,6 +6,8 @@ include:
   - board: hy0020/nrf52832
     shield: hy0020_test_peripheral
     artifact-name: hy0020_test_peripheral
+  - board: hy0020/nrf52832
+    shield: settings_reset
 
 #  - board: xiao_ble//zmk
 #    shield: o67r_dongle
