@@ -610,7 +610,7 @@ static const char *keycode_label(uint32_t keycode, char *fallback, size_t fallba
         return "CPY";
     case RC(C):
         return "CPY";
-    case LC(X)):
+    case LC(X):
         return "CUT";
     case RC(X):
         return "CUT";
