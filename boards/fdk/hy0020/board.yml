@@ -1,0 +1,6 @@
+board:
+  name: hy0020
+  full_name: FDK HY0020
+  vendor: fdk
+  socs:
+    - name: nrf52832

@@ -1,0 +1,6 @@
+if SHIELD_HY0020_TEST || SHIELD_HY0020_TEST_PERIPHERAL
+
+config ZMK_KEYBOARD_NAME
+    default "HY0020 Test"
+
+endif

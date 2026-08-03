@@ -1,0 +1,8 @@
+file_format: "1"
+id: hy0020
+name: FDK HY0020
+type: board
+arch: arm
+outputs:
+  - ble
+url: https://github.com/Kijitora114514/ApexPredator

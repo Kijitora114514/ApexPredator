@@ -1,4 +1,12 @@
 include:
+  # FDK HY0020 (nRF52832), direct SWD image without USB or bootloader.
+  - board: hy0020/nrf52832
+    shield: hy0020_test
+    artifact-name: hy0020_test
+  - board: hy0020/nrf52832
+    shield: hy0020_test_peripheral
+    artifact-name: hy0020_test_peripheral
+
   - board: xiao_ble//zmk
     shield: o67r_dongle
     artifact-name: o67r_deck-xiao_ble_zmk

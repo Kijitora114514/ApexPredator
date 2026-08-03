@@ -1,0 +1,3 @@
+# HY0020 has no USB or board-level console. Keep only the GPIO driver required
+# by keyboard matrix shields.
+CONFIG_GPIO=y

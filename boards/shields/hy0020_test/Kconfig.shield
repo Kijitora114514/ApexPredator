@@ -1,0 +1,5 @@
+config SHIELD_HY0020_TEST
+    def_bool $(shields_list_contains,hy0020_test)
+
+config SHIELD_HY0020_TEST_PERIPHERAL
+    def_bool $(shields_list_contains,hy0020_test_peripheral)

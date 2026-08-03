@@ -1,0 +1,10 @@
+file_format: "1"
+id: hy0020_test
+name: HY0020 Test Matrix
+type: shield
+url: https://github.com/Kijitora114514/ApexPredator
+features:
+  - keys
+siblings:
+  - hy0020_test
+  - hy0020_test_peripheral
