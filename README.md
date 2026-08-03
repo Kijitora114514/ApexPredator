@@ -44,8 +44,8 @@ or bootloader partition was copied.
 HY0020 is specified with a 32 MHz high-frequency crystal and a 32.768 kHz
 low-frequency crystal. The board enables the Nordic clock node and selects
 `CONFIG_CLOCK_CONTROL_NRF_K32SRC_XTAL=y`. The high-frequency radio clock uses
-the SoC HFXO path. `CONFIG_SOC_DCDC_NRF52X=n` and
-`NRF5X_REG_MODE_LDO` explicitly keep the initial build in LDO mode.
+the SoC HFXO path. `NRF5X_REG_MODE_LDO` explicitly keeps the initial build in
+LDO mode; the derived `SOC_DCDC_NRF52X` Kconfig symbol is not assigned directly.
 
 P0.21 is configured as nRESET through UICR. SWDIO and SWDCLK are dedicated
 debug pads controlled by the Arm debug port and are deliberately not claimed
