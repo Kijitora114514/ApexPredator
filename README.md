@@ -112,9 +112,11 @@ Expected direct-programming output:
 build/hy0020_test/zephyr/zmk.hex
 ```
 
-The GitHub Actions matrix builds both targets. The reusable action is configured
-with `fallback_binary: hex`, so the merged `firmware` artifact contains
-`hy0020_test.hex` and `hy0020_test_peripheral.hex` when both builds succeed.
+The general `build.yaml` matrix includes both targets. A separate
+`build-hy0020.yaml` matrix and `.github/workflows/build-hy0020.yml` workflow
+isolate HY0020 validation from unrelated keyboard targets. The reusable action
+is configured with `fallback_binary: hex`, so its merged `hy0020-firmware`
+artifact contains `hy0020_test.hex` and `hy0020_test_peripheral.hex`.
 
 ## SWD programming with a Raspberry Pi Pico probe
 

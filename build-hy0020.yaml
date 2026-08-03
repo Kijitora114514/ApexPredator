@@ -1,0 +1,7 @@
+include:
+  - board: hy0020/nrf52832
+    shield: hy0020_test
+    artifact-name: hy0020_test
+  - board: hy0020/nrf52832
+    shield: hy0020_test_peripheral
+    artifact-name: hy0020_test_peripheral

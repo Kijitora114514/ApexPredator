@@ -1,0 +1,39 @@
+name: Build HY0020 firmware
+
+on:
+  push:
+    paths:
+      - ".github/workflows/build-hy0020.yml"
+      - "boards/fdk/hy0020/**"
+      - "boards/shields/hy0020_test/**"
+      - "build-hy0020.yaml"
+      - "config/west.yml"
+      - "CMakeLists.txt"
+      - "Kconfig"
+      - "zephyr/module.yml"
+  pull_request:
+    paths:
+      - ".github/workflows/build-hy0020.yml"
+      - "boards/fdk/hy0020/**"
+      - "boards/shields/hy0020_test/**"
+      - "build-hy0020.yaml"
+      - "config/west.yml"
+      - "CMakeLists.txt"
+      - "Kconfig"
+      - "zephyr/module.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hy0020-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
+    with:
+      build_matrix_path: build-hy0020.yaml
+      fallback_binary: hex
+      archive_name: hy0020-firmware
