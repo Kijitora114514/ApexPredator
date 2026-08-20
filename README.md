@@ -18,6 +18,22 @@ positions and reports ordinary BLE keyboard usages. The peripheral target uses
 the same matrix and keymap, but additionally enables ZMK split mode without the
 central role.
 
+## MDBT50Q dongle target
+
+The production-style build uses an MDBT50Q-RX as a keyless split central and
+the HY0020 as its single BLE peripheral. Both parts use the same 6x7 transform,
+physical layout, and 42-position test keymap.
+
+- Dongle board: `mdbt50q_rx`
+- Dongle shield: `hy0020_test_dongle`
+- Keyboard board/shield: `hy0020/nrf52832` with `hy0020_test_peripheral`
+- Host transport from the dongle: USB or BLE
+- Split transport from the HY0020: BLE
+
+The dongle uses ZMK's mock kscan driver and therefore claims no MDBT50Q GPIOs.
+Before pairing this new central/peripheral combination, flash the matching
+`settings_reset` image to both devices to clear stale split bonds.
+
 ## Versions and reference boards
 
 `config/west.yml` tracks ZMK `main`. At the time this board was added, ZMK

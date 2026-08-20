@@ -1,4 +1,9 @@
 include:
+  # MDBT50Q-1MV2 USB/BLE dongle: split central with no local keys.
+  - board: mdbt50q_rx
+    shield: hy0020_test_dongle
+    artifact-name: hy0020_test_dongle-mdbt50q
+
   # FDK HY0020 (nRF52832), direct SWD image without USB or bootloader.
   - board: hy0020/nrf52832
     shield: hy0020_test
@@ -9,3 +14,6 @@ include:
   - board: hy0020/nrf52832
     shield: settings_reset
     artifact-name: settings_reset-hy0020_nrf52832
+  - board: mdbt50q_rx
+    shield: settings_reset
+    artifact-name: settings_reset-mdbt50q

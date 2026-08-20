@@ -8,3 +8,4 @@ features:
 siblings:
   - hy0020_test
   - hy0020_test_peripheral
+  - hy0020_test_dongle
