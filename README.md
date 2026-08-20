@@ -7,16 +7,16 @@ HY0020 (nRF52832) keyboard controller.
 
 - Zephyr board name: `hy0020`
 - Hardware Model v2 target: `hy0020/nrf52832`
-- Standalone test shield: `hy0020_test`
-- Future split peripheral shield: `hy0020_test_peripheral`
+- Standalone shield: `apex_predetor`
+- Split peripheral shield: `apex_predetor_peripheral`
 - SoC: Nordic nRF52832 QFAA, Cortex-M4F, 512 KiB flash, 64 KiB SRAM
 - Firmware transport: Bluetooth LE only
 - Programming: direct SWD; no USB and no bootloader
 
-The standalone target is the first bring-up target. It scans all 42 matrix
-positions and reports ordinary BLE keyboard usages. The peripheral target uses
-the same matrix and keymap, but additionally enables ZMK split mode without the
-central role.
+The standalone target scans all 42 matrix positions and reports ordinary BLE
+keyboard usages. The peripheral target uses the same matrix and keymap, but
+additionally enables ZMK split mode without the central role. The original
+`hy0020_test` shield remains available as the known-working bring-up baseline.
 
 ## MDBT50Q dongle target
 
@@ -25,8 +25,8 @@ the HY0020 as its single BLE peripheral. Both parts use the same 6x7 transform,
 physical layout, and 42-position test keymap.
 
 - Dongle board: `mdbt50q_rx`
-- Dongle shield: `hy0020_test_dongle`
-- Keyboard board/shield: `hy0020/nrf52832` with `hy0020_test_peripheral`
+- Dongle shield: `apex_predetor_dongle`
+- Keyboard board/shield: `hy0020/nrf52832` with `apex_predetor_peripheral`
 - Host transport from the dongle: USB or BLE
 - Split transport from the HY0020: BLE
 
@@ -104,27 +104,27 @@ the repository and download the ZMK/Zephyr projects selected by the manifest.
 west init -l config
 west update
 west zephyr-export
-west build -p always -s zmk/app -d build/hy0020_test \
+west build -p always -s zmk/app -d build/apex_predetor \
   -b hy0020/nrf52832 -- \
   -DZMK_CONFIG="$PWD/config" \
   -DZMK_EXTRA_MODULES="$PWD" \
-  -DSHIELD=hy0020_test
+  -DSHIELD=apex_predetor
 ```
 
 The optional split peripheral build is:
 
 ```sh
-west build -p always -s zmk/app -d build/hy0020_test_peripheral \
+west build -p always -s zmk/app -d build/apex_predetor_peripheral \
   -b hy0020/nrf52832 -- \
   -DZMK_CONFIG="$PWD/config" \
   -DZMK_EXTRA_MODULES="$PWD" \
-  -DSHIELD=hy0020_test_peripheral
+  -DSHIELD=apex_predetor_peripheral
 ```
 
 Expected direct-programming output:
 
 ```text
-build/hy0020_test/zephyr/zmk.hex
+build/apex_predetor/zephyr/zmk.hex
 ```
 
 The `build.yaml` matrix and `.github/workflows/build.yml` workflow build the
@@ -142,7 +142,7 @@ With OpenOCD and a CMSIS-DAP Pico probe:
 ```sh
 openocd -f interface/cmsis-dap.cfg -f target/nrf52.cfg \
   -c "adapter speed 1000" \
-  -c "program build/hy0020_test/zephyr/zmk.hex verify reset exit"
+  -c "program build/apex_predetor/zephyr/zmk.hex verify reset exit"
 ```
 
 For older Picoprobe firmware/OpenOCD packages, replace the interface file with

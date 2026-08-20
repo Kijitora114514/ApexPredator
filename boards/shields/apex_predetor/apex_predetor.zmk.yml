@@ -1,0 +1,11 @@
+file_format: "1"
+id: apex_predetor
+name: ApexPredetor
+type: shield
+url: https://github.com/Kijitora114514/ApexPredator
+features:
+  - keys
+siblings:
+  - apex_predetor
+  - apex_predetor_peripheral
+  - apex_predetor_dongle
