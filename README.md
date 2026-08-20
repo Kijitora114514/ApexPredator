@@ -1,8 +1,7 @@
 # ApexPredator ZMK configuration
 
-This repository contains the original o67r configuration and an out-of-tree
-Zephyr board/shield pair for initial bring-up of an FDK HY0020 (nRF52832)
-keyboard controller.
+This repository contains an out-of-tree Zephyr board/shield pair for an FDK
+HY0020 (nRF52832) keyboard controller.
 
 ## HY0020 build target
 
