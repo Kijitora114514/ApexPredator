@@ -1,4 +1,4 @@
-name: Build ZMK firmware
+name: Build HY0020 firmware
 
 on: [push, pull_request, workflow_dispatch]
 
@@ -13,4 +13,6 @@ jobs:
   build:
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
     with:
+      build_matrix_path: build.yaml
       fallback_binary: hex
+      archive_name: hy0020-firmware
