@@ -13,20 +13,20 @@ HY0020 (nRF52832) keyboard controller.
 - Firmware transport: Bluetooth LE only
 - Programming: direct SWD; no USB and no bootloader
 
-The standalone target scans all 42 matrix positions and reports ordinary BLE
-keyboard usages. The peripheral target uses the same matrix and keymap, but
-additionally enables ZMK split mode without the central role. The original
+Both HY0020 targets are BLE split peripherals. `apex_predetor` is the left
+half and `apex_predetor_peripheral` is the right half. The original
 `hy0020_test` shield remains available as the known-working bring-up baseline.
 
 ## MDBT50Q dongle target
 
-The production-style build uses an MDBT50Q-RX as a keyless split central and
-the HY0020 as its single BLE peripheral. Both parts use the same 6x7 transform,
-physical layout, and 42-position test keymap.
+The production build uses an MDBT50Q-RX as a keyless split central and two
+HY0020 modules as its BLE peripherals. All three images use the same 5x14
+logical transform, physical layout, and 70-position diagnostic keymap.
 
 - Dongle board: `mdbt50q_rx`
 - Dongle shield: `apex_predetor_dongle`
-- Keyboard board/shield: `hy0020/nrf52832` with `apex_predetor_peripheral`
+- Left board/shield: `hy0020/nrf52832` with `apex_predetor`
+- Right board/shield: `hy0020/nrf52832` with `apex_predetor_peripheral`
 - Host transport from the dongle: USB or BLE
 - Split transport from the HY0020: BLE
 
@@ -82,18 +82,15 @@ no bootloader offset, secondary image slot, USB DFU partition, or UF2 image.
 The diode direction is `col2row`. Every number below is an explicit Nordic
 GPIO0 pin number.
 
-| Matrix signal | HY0020 pin | Matrix signal | HY0020 pin |
-|---|---|---|---|
-| col0 | P0.16 | row0 | P0.28 |
-| col1 | P0.18 | row1 | P0.30 |
-| col2 | P0.20 | row2 | P0.02 |
-| col3 | P0.12 | row3 | P0.03 |
-| col4 | P0.07 | row4 | P0.04 |
-| col5 | P0.08 | row5 | P0.05 |
-| col6 | P0.06 | | |
+| Half | Columns | Rows |
+|---|---|---|
+| Left | P0.30, P0.02, P0.03, P0.04, P0.06, P0.07 | P0.16, P0.18, P0.20, P0.12, P0.30 |
+| Right | P0.02, P0.03, P0.04, P0.05, P0.06, P0.08, P0.07, P0.12 | P0.16, P0.18, P0.20, P0.28, P0.30 |
 
-The 6×7 matrix transform contains all 42 row/column positions. The test layer
-assigns A–Z, 0–9, four arrow keys, Enter, and Space, with no unused positions.
+The left half occupies logical columns 0–5 and the right half uses a column
+offset of 6, occupying columns 6–13. Note that the supplied left wiring assigns
+P0.30 to both col0 and row4; those signals need distinct GPIO pins for a usable
+matrix.
 
 ## Local pristine build
 

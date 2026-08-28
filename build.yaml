@@ -4,13 +4,14 @@ include:
     shield: apex_predetor_dongle
     artifact-name: apex_predetor_dongle-mdbt50q
 
-  # FDK HY0020 (nRF52832), direct SWD image without USB or bootloader.
+  # Left FDK HY0020 (nRF52832), direct SWD image without USB or bootloader.
   - board: hy0020/nrf52832
     shield: apex_predetor
-    artifact-name: apex_predetor
+    artifact-name: apex_predetor_left-hy0020
+  # Right FDK HY0020 (nRF52832).
   - board: hy0020/nrf52832
     shield: apex_predetor_peripheral
-    artifact-name: apex_predetor_peripheral
+    artifact-name: apex_predetor_right-hy0020
   - board: hy0020/nrf52832
     shield: settings_reset
     artifact-name: settings_reset-hy0020_nrf52832

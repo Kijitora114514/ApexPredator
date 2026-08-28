@@ -27,9 +27,9 @@ manifest:
       revision: v0.4
 
     # GC9A01A
-    - name: gc9a01a_zephyr_driver
-      remote: amrithvenkat
-      revision: main
+    #- name: gc9a01a_zephyr_driver
+    #  remote: amrithvenkat
+    #  revision: main
 
     - name: zmk-input-processors
       remote: halfdane
