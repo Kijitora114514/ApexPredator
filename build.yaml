@@ -6,11 +6,11 @@ include:
 
   # Left FDK HY0020 (nRF52832), direct SWD image without USB or bootloader.
   - board: hy0020/nrf52832
-    shield: apex_predetor
+    shield: apex_predetor_left
     artifact-name: apex_predetor_left-hy0020
   # Right FDK HY0020 (nRF52832).
   - board: hy0020/nrf52832
-    shield: apex_predetor_peripheral
+    shield: apex_predetor_right
     artifact-name: apex_predetor_right-hy0020
   - board: hy0020/nrf52832
     shield: settings_reset

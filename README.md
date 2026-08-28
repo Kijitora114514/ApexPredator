@@ -7,14 +7,14 @@ HY0020 (nRF52832) keyboard controller.
 
 - Zephyr board name: `hy0020`
 - Hardware Model v2 target: `hy0020/nrf52832`
-- Standalone shield: `apex_predetor`
-- Split peripheral shield: `apex_predetor_peripheral`
+- Left split peripheral shield: `apex_predetor_left`
+- Right split peripheral shield: `apex_predetor_right`
 - SoC: Nordic nRF52832 QFAA, Cortex-M4F, 512 KiB flash, 64 KiB SRAM
 - Firmware transport: Bluetooth LE only
 - Programming: direct SWD; no USB and no bootloader
 
-Both HY0020 targets are BLE split peripherals. `apex_predetor` is the left
-half and `apex_predetor_peripheral` is the right half. The original
+Both HY0020 targets are BLE split peripherals. `apex_predetor_left` is the left
+half and `apex_predetor_right` is the right half. The original
 `hy0020_test` shield remains available as the known-working bring-up baseline.
 
 ## MDBT50Q dongle target
@@ -25,8 +25,8 @@ logical transform, physical layout, and 70-position diagnostic keymap.
 
 - Dongle board: `mdbt50q_rx`
 - Dongle shield: `apex_predetor_dongle`
-- Left board/shield: `hy0020/nrf52832` with `apex_predetor`
-- Right board/shield: `hy0020/nrf52832` with `apex_predetor_peripheral`
+- Left board/shield: `hy0020/nrf52832` with `apex_predetor_left`
+- Right board/shield: `hy0020/nrf52832` with `apex_predetor_right`
 - Host transport from the dongle: USB or BLE
 - Split transport from the HY0020: BLE
 
@@ -105,17 +105,17 @@ west build -p always -s zmk/app -d build/apex_predetor \
   -b hy0020/nrf52832 -- \
   -DZMK_CONFIG="$PWD/config" \
   -DZMK_EXTRA_MODULES="$PWD" \
-  -DSHIELD=apex_predetor
+  -DSHIELD=apex_predetor_left
 ```
 
 The optional split peripheral build is:
 
 ```sh
-west build -p always -s zmk/app -d build/apex_predetor_peripheral \
+west build -p always -s zmk/app -d build/apex_predetor_right \
   -b hy0020/nrf52832 -- \
   -DZMK_CONFIG="$PWD/config" \
   -DZMK_EXTRA_MODULES="$PWD" \
-  -DSHIELD=apex_predetor_peripheral
+  -DSHIELD=apex_predetor_right
 ```
 
 Expected direct-programming output:

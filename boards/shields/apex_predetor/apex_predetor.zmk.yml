@@ -6,6 +6,6 @@ url: https://github.com/Kijitora114514/ApexPredator
 features:
   - keys
 siblings:
-  - apex_predetor
-  - apex_predetor_peripheral
+  - apex_predetor_left
+  - apex_predetor_right
   - apex_predetor_dongle

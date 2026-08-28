@@ -7,28 +7,6 @@
         zmk,physical-layout = &apex_predetor_layout;
     };
 
-    kscan0: kscan {
-        compatible = "zmk,kscan-gpio-matrix";
-        diode-direction = "col2row";
-
-        /* Left HY0020: rows P0.16, P0.18, P0.20, P0.12, P0.30. */
-        row-gpios =
-            <&gpio0 16 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>,
-            <&gpio0 18 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>,
-            <&gpio0 20 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>,
-            <&gpio0 12 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>,
-            <&gpio0 30 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
-
-        /* Left HY0020: columns P0.30, P0.02, P0.03, P0.04, P0.06, P0.07. */
-        col-gpios =
-            <&gpio0 30 GPIO_ACTIVE_HIGH>,
-            <&gpio0  2 GPIO_ACTIVE_HIGH>,
-            <&gpio0  3 GPIO_ACTIVE_HIGH>,
-            <&gpio0  4 GPIO_ACTIVE_HIGH>,
-            <&gpio0  6 GPIO_ACTIVE_HIGH>,
-            <&gpio0  7 GPIO_ACTIVE_HIGH>;
-    };
-
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
         rows = <5>;
