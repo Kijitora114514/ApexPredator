@@ -5,14 +5,39 @@
     keymap {
         compatible = "zmk,keymap";
 
-        test_layer {
+        default_layer {
             /* Diagnostic 5x14 layer shared by the dongle and both halves. */
+            display-name = "Base";
             bindings = <
-                &kp ESC   &kp N1    &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7    &kp N8    &kp N9    &kp N0    &kp MINUS &kp EQUAL &kp BSPC
-                &kp TAB   &kp Q     &kp W     &kp E     &kp R     &kp T     &kp Y     &kp U     &kp I     &kp O     &kp P     &kp LBKT  &kp RBKT  &kp BSLH
-                &kp CAPS  &kp A     &kp S     &kp D     &kp F     &kp G     &kp H     &kp J     &kp K     &kp L     &kp SEMI  &kp SQT   &kp ENTER &kp ENTER
-                &kp LSHFT &kp Z     &kp X     &kp C     &kp V     &kp B     &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH  &kp RSHFT &kp UP    &kp DEL
-                &kp LCTRL &kp LGUI  &kp LALT  &kp SPACE &kp SPACE &kp SPACE &kp SPACE &kp SPACE &kp RALT  &kp LEFT  &kp DOWN  &kp RIGHT &kp RGUI  &kp RCTRL
+                &kp ESC        &kp N1    &kp N2    &kp N3    &kp N4    &kp N5      &kp N6    &kp N7    &kp N8    &kp N9    &kp N0    &kp MINUS &kp EQUAL &kp BSLH
+                &kp TAB        &kp Q     &kp W     &kp E     &kp R     &kp T       &kp Y     &kp U     &kp I     &kp O     &kp P     &kp LBKT  &kp RBKT  &kp BSPC
+                &kp LCTRL      &kp A     &kp S     &kp D     &kp F     &kp G       &kp H     &kp J     &kp K     &kp L     &kp SEMI  &kp SQT   &kp ENTER &kp GRAVE
+                &kp LSHFT      &kp Z     &kp X     &kp C     &kp V     &kp B       &kp B     &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH  &kp RSHFT &mo 2
+                &studio_unlock &kp LALT  &kp LGUI  &kp LANG2 &kp SPACE &kp N6                &kp SPACE           &kp LANG1 &kp RGUI  &kp RALT  &kp DEL   &studio_unlock
+            >;
+        };
+        
+        layer1 {
+            /* Diagnostic 5x14 layer shared by the dongle and both halves. */
+            display-name = "fn";
+            bindings = <
+                &kp ESC        &kp F1    &kp F2    &kp F3    &kp F4    &kp F5      &kp F6          &kp F7        &kp F8       &kp F9    &kp F10         &kp F11   &kp F12   &kp INS
+                &kp CAPS       &kp Q     &kp W     &kp E     &kp R     &kp T       &kp Y           &kp U         &kp PSCRN    &kp SLCK  &kp PAUSE_BREAK &kp UP    &kp RBKT  &kp BSPC
+                &kp LCTRL      &kp A     &kp S     &kp D     &kp F     &kp G       &kp KP_MULTIPLY &kp KP_DIVIDE &kp HOME     &kp PG_UP &kp LEFT        &kp RIGHT &kp ENTER &kp DEL
+                &kp LSHFT      &kp Z     &kp X     &kp C     &kp V     &kp B       &kp B           &kp KP_PLUS   &kp KP_MINUS &kp END   &kp PG_DN       &kp DOWN  &kp RSHFT &trans
+                &none          &kp LALT  &kp LGUI  &kp LANG2 &kp SPACE &kp F6                      &kp SPACE                  &kp LANG1 &kp RGUI        &kp RALT  &kp DEL   &none
+            >;
+        };
+
+        layer2 {
+            /* Diagnostic 5x14 layer shared by the dongle and both halves. */
+            display-name = "fn";
+            bindings = <
+                &kp ESC        &kp F1    &kp F2    &kp F3    &kp F4    &kp F5      &kp F6          &kp F7        &kp F8       &kp F9    &kp F10         &kp F11   &kp F12   &kp BSLH
+                &kp TAB        &kp Q     &kp W     &kp E     &kp R     &kp T       &kp Y           &kp U         &kp I        &kp O     &kp P           &kp UP    &kp RBKT  &kp BSPC
+                &kp LCTRL      &kp A     &kp S     &kp D     &kp F     &kp G       &kp KP_MULTIPLY &kp KP_DIVIDE &kp HOME     &kp PG_UP &kp LEFT        &kp RIGHT &kp ENTER &kp PSCRN
+                &kp LSHFT      &kp Z     &kp X     &kp C     &kp V     &kp B       &kp B           &kp KP_PLUS   &kp KP_MINUS &kp END   &kp PG_DN       &kp DOWN  &kp RSHFT &trans
+                &none          &kp LALT  &kp LGUI  &kp LANG2 &kp SPACE &kp F6                      &kp SPACE                  &kp LANG1 &kp RGUI        &kp RALT  &kp DEL   &none
             >;
         };
     };
