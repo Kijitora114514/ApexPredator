@@ -5,7 +5,7 @@
         compatible = "zmk,physical-layout";
         display-name = "ApexPredetor Split 5x14";
         transform = <&default_transform>;
-        keys  //                 w   h    x   y   r rx ry
+        keys = //                 w   h    x   y   r rx ry
             <&key_physical_attrs 100 100    0   0 0 0 0>,
             <&key_physical_attrs 100 100  100   0 0 0 0>,
             <&key_physical_attrs 100 100  200   0 0 0 0>,
