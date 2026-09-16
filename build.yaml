@@ -2,6 +2,7 @@ include:
   # MDBT50Q-1MV2 USB/BLE dongle: split central with no local keys.
   - board: mdbt50q_rx
     shield: apex_predetor_dongle
+    snippet: studio-rpc-usb-uart
     artifact-name: apex_predetor_dongle-mdbt50q
 
   # Left FDK HY0020 (nRF52832), direct SWD image without USB or bootloader.
