@@ -9,10 +9,12 @@ include:
   - board: hy0020/nrf52832
     shield: apex_predetor_left
     artifact-name: apex_predetor_left-hy0020
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
   # Right FDK HY0020 (nRF52832).
   - board: hy0020/nrf52832
     shield: apex_predetor_right
     artifact-name: apex_predetor_right-hy0020
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
   - board: hy0020/nrf52832
     shield: settings_reset
     artifact-name: settings_reset-hy0020_nrf52832
