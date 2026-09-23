@@ -5,7 +5,6 @@ include:
     snippet: studio-rpc-usb-uart
     artifact-name: apex_predetor_dongle-mdbt50q
     cmake-args: -DCONFIG_ZMK_STUDIO=y
-
   # Left FDK HY0020 (nRF52832), direct SWD image without USB or bootloader.
   - board: hy0020/nrf52832
     shield: apex_predetor_left
