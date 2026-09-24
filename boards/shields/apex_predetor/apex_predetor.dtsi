@@ -3,7 +3,7 @@
 
 / {
     chosen {
-        //zmk,kscan = &kscan0;
+        zmk,kscan = &kscan0;
         zmk,physical-layout = &apex_predetor_layout;
     };
 
