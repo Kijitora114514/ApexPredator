@@ -16,9 +16,17 @@
 
 #include <drivers/behavior.h>
 #include <zmk/behavior.h>
+
+#if !defined(CONFIG_ZMK_SPLIT) || defined(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
 #include <zmk/events/keycode_state_changed.h>
+#define RCKP_CAN_RAISE_KEYCODE_EVENT 1
+#else
+#define RCKP_CAN_RAISE_KEYCODE_EVENT 0
+#endif
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
+
+#if RCKP_CAN_RAISE_KEYCODE_EVENT
 
 #define REF_COUNT_KEY_MAX_ACTIVE 32
 
@@ -64,8 +72,11 @@ static int find_free_slot(void) {
     return -1;
 }
 
+#endif
+
 static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event) {
+#if RCKP_CAN_RAISE_KEYCODE_EVENT
     const uint32_t keycode = binding->param1;
     bool should_press = false;
     int err = 0;
@@ -102,10 +113,17 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
 
     LOG_DBG("press keycode 0x%02X", keycode);
     return raise_zmk_keycode_state_changed_from_encoded(keycode, true, event.timestamp);
+#else
+    ARG_UNUSED(binding);
+    ARG_UNUSED(event);
+
+    return ZMK_BEHAVIOR_OPAQUE;
+#endif
 }
 
 static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
                                       struct zmk_behavior_binding_event event) {
+#if RCKP_CAN_RAISE_KEYCODE_EVENT
     const uint32_t keycode = binding->param1;
     bool should_release = false;
 
@@ -128,18 +146,28 @@ static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
 
     LOG_DBG("release keycode 0x%02X", keycode);
     return raise_zmk_keycode_state_changed_from_encoded(keycode, false, event.timestamp);
+#else
+    ARG_UNUSED(binding);
+    ARG_UNUSED(event);
+
+    return ZMK_BEHAVIOR_OPAQUE;
+#endif
 }
 
 static int behavior_ref_count_key_press_init(const struct device *dev) {
     ARG_UNUSED(dev);
 
+#if RCKP_CAN_RAISE_KEYCODE_EVENT
     k_mutex_init(&active_keys_lock);
+#endif
+
     return 0;
 }
 
 static const struct behavior_driver_api behavior_ref_count_key_press_driver_api = {
     .binding_pressed = on_keymap_binding_pressed,
     .binding_released = on_keymap_binding_released,
+    .locality = BEHAVIOR_LOCALITY_CENTRAL,
 };
 
 #define REF_COUNT_KEY_PRESS_INST(n)                                                                \
