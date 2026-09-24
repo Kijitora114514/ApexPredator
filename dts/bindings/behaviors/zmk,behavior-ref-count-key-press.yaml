@@ -1,0 +1,5 @@
+description: Reference-counted key press behavior
+
+compatible: "zmk,behavior-ref-count-key-press"
+
+include: one_param.yaml
