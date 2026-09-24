@@ -1,4 +1,9 @@
 include:
+  - board: xiao_ble//zmk
+    shield: apex_predetor_dongle
+    snippet: studio-rpc-usb-uart
+    artifact-name: apex_predetor_dongle-xiao_ble
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
   # MDBT50Q-1MV2 USB/BLE dongle: split central with no local keys.
   - board: mdbt50q_rx
     shield: apex_predetor_dongle
@@ -18,6 +23,9 @@ include:
   - board: hy0020/nrf52832
     shield: settings_reset
     artifact-name: settings_reset-hy0020_nrf52832
+  - board: seeeduino_xiao_ble
+    shield: settings_reset
+    artifact-name: settings_reset-xiao_ble
   - board: mdbt50q_rx
     shield: settings_reset
     artifact-name: settings_reset-mdbt50q
