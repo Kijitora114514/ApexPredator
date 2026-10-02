@@ -16,3 +16,121 @@ jobs:
       build_matrix_path: build.yaml
       fallback_binary: hex
       archive_name: hy0020-firmware
+
+  debug-hy0020-generated-files:
+    runs-on: ubuntu-latest
+    container:
+      image: zmkfirmware/zmk-build-arm:stable
+    needs: build
+    name: Debug HY0020 generated files
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - board: hy0020/nrf52832
+            shield: apex_predetor_left
+            artifact-name: apex_predetor_left-hy0020
+            cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+          - board: hy0020/nrf52832
+            shield: apex_predetor_right
+            artifact-name: apex_predetor_right-hy0020
+            cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create build directory
+        run: |
+          echo "build_dir=$(mktemp -d)" >> $GITHUB_ENV
+
+      - name: Prepare variables
+        shell: sh -x {0}
+        env:
+          board: ${{ matrix.board }}
+          shield: ${{ matrix.shield }}
+          artifact_name: ${{ matrix.artifact-name }}
+        run: |
+          if [ -e zephyr/module.yml ]; then
+            export zmk_load_arg=" -DZMK_EXTRA_MODULES='${GITHUB_WORKSPACE}'"
+            new_tmp_dir="${TMPDIR:-/tmp}/zmk-config"
+            mkdir -p "${new_tmp_dir}"
+            echo "base_dir=${new_tmp_dir}" >> $GITHUB_ENV
+          else
+            echo "base_dir=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
+          fi
+
+          echo "zephyr_version=${ZEPHYR_VERSION}" >> $GITHUB_ENV
+          echo "extra_cmake_args=${shield:+-DSHIELD=\"$shield\"}${zmk_load_arg}" >> $GITHUB_ENV
+          echo "display_name=${shield:+$shield - }${board}" >> $GITHUB_ENV
+          echo "artifact_name=${artifact_name:-${shield:+$shield-}${board}-zmk}" >> $GITHUB_ENV
+
+      - name: Copy config files to isolated temporary directory
+        run: |
+          if [ "${{ env.base_dir }}" != "${GITHUB_WORKSPACE}" ]; then
+            mkdir "${{ env.base_dir }}/config"
+            cp -R config/* "${{ env.base_dir }}/config/"
+          fi
+
+      - name: Cache west modules
+        uses: actions/cache@v4
+        continue-on-error: true
+        env:
+          cache_name: cache-zephyr-${{ env.zephyr_version }}-modules
+        with:
+          path: |
+            ${{ env.base_dir }}/modules/
+            ${{ env.base_dir }}/tools/
+            ${{ env.base_dir }}/zephyr/
+            ${{ env.base_dir }}/bootloader/
+            ${{ env.base_dir }}/zmk/
+          key: ${{ runner.os }}-debug-${{ env.cache_name }}-${{ hashFiles('**/west.yml', '**/build.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-debug-${{ env.cache_name }}-
+            ${{ runner.os }}-build-${{ env.cache_name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: West Init
+        working-directory: ${{ env.base_dir }}
+        run: west init -l "${{ env.base_dir }}/config"
+
+      - name: West Update
+        working-directory: ${{ env.base_dir }}
+        run: west update --fetch-opt=--filter=tree:0
+
+      - name: West Zephyr export
+        working-directory: ${{ env.base_dir }}
+        run: west zephyr-export
+
+      - name: West Build (${{ env.display_name }})
+        working-directory: ${{ env.base_dir }}
+        shell: sh -x {0}
+        run: west build -s zmk/app -d "${{ env.build_dir }}" -b "${{ matrix.board }}" -- -DZMK_CONFIG=${{ env.base_dir }}/config ${{ env.extra_cmake_args }} ${{ matrix.cmake-args }}
+
+      - name: Collect generated config and devicetree
+        if: ${{ !cancelled() }}
+        shell: sh -x {0}
+        run: |
+          out_dir="${{ env.build_dir }}/debug-artifacts/${{ env.artifact_name }}"
+          mkdir -p "${out_dir}/zephyr"
+
+          find "${{ env.build_dir }}" -path '*/zephyr/.config' -print -exec cp '{}' "${out_dir}/zephyr/.config" \;
+          find "${{ env.build_dir }}" -path '*/zephyr/zephyr.dts' -print -exec cp '{}' "${out_dir}/zephyr/zephyr.dts" \;
+
+          {
+            echo "artifact_name=${{ env.artifact_name }}"
+            echo "board=${{ matrix.board }}"
+            echo "shield=${{ matrix.shield }}"
+            echo "build_dir=${{ env.build_dir }}"
+            echo ".config files:"
+            find "${{ env.build_dir }}" -path '*/zephyr/.config' -print
+            echo "zephyr.dts files:"
+            find "${{ env.build_dir }}" -path '*/zephyr/zephyr.dts' -print
+          } > "${out_dir}/manifest.txt"
+
+      - name: Upload generated config and devicetree (${{ env.artifact_name }})
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-zmk-generated-${{ env.artifact_name }}
+          path: ${{ env.build_dir }}/debug-artifacts
