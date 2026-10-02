@@ -115,6 +115,7 @@ jobs:
           mkdir -p "${out_dir}/zephyr"
 
           find "${{ env.build_dir }}" -path '*/zephyr/.config' -print -exec cp '{}' "${out_dir}/zephyr/.config" \;
+          find "${{ env.build_dir }}" -path '*/zephyr/.config' -print -exec cp '{}' "${out_dir}/zephyr/zephyr_config.txt" \;
           find "${{ env.build_dir }}" -path '*/zephyr/zephyr.dts' -print -exec cp '{}' "${out_dir}/zephyr/zephyr.dts" \;
 
           {
@@ -124,6 +125,8 @@ jobs:
             echo "build_dir=${{ env.build_dir }}"
             echo ".config files:"
             find "${{ env.build_dir }}" -path '*/zephyr/.config' -print
+            echo "artifact Kconfig copies:"
+            find "${out_dir}" \( -name '.config' -o -name 'zephyr_config.txt' \) -print
             echo "zephyr.dts files:"
             find "${{ env.build_dir }}" -path '*/zephyr/zephyr.dts' -print
           } > "${out_dir}/manifest.txt"
@@ -133,4 +136,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: debug-zmk-generated-${{ env.artifact_name }}
-          path: ${{ env.build_dir }}/debug-artifacts
+          include-hidden-files: true
+          path: ${{ env.build_dir }}/debug-artifacts/
